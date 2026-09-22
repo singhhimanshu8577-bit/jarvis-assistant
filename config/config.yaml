@@ -1,0 +1,64 @@
+# ==========================================
+# JARVIS AI Voice Assistant Configuration
+# ==========================================
+
+assistant:
+  name: "JARVIS"
+  user_name: "Sir"
+  persona_prompt: >
+    You are JARVIS (Just A Rather Very Intelligent System), an ultra-competent,
+    articulate, polite, and sophisticated AI assistant. You speak with refined
+    British elegance, understated dry wit, and crisp brevity.
+    Address the user as 'Sir' or 'Ma'am' when appropriate.
+    Keep your spoken responses concise, actionable, and natural.
+
+wake_word:
+  enabled: true
+  engine: "openwakeword"      # Options: 'openwakeword', 'vosk', 'keyword_energy'
+  keyword: "jarvis"
+  sensitivity: 0.5            # Threshold between 0.0 and 1.0
+  sample_rate: 16000
+  chunk_size: 1280            # 80ms at 16kHz
+
+stt:
+  engine: "faster-whisper"    # Options: 'faster-whisper', 'speech_recognition'
+  model_size: "base.en"       # Options: 'tiny.en', 'base.en', 'small.en'
+  device: "auto"              # 'cuda', 'cpu', or 'auto'
+  compute_type: "int8"        # 'int8', 'float16', 'float32'
+  energy_threshold: 300
+  pause_threshold: 1.2        # Seconds of silence before finalizing speech
+  phrase_time_limit: 15.0     # Maximum recording time in seconds
+
+tts:
+  engine: "edge-tts"          # Options: 'edge-tts' (high quality neural), 'pyttsx3' (offline)
+  voice: "en-GB-RyanNeural"   # British Butler. Other options: 'en-US-ChristopherNeural', 'en-US-GuyNeural'
+  rate: "+0%"
+  pitch: "+0Hz"
+  volume: "+0%"
+  fallback_engine: "pyttsx3"
+
+llm:
+  provider: "gemini"          # Options: 'gemini', 'openai', 'ollama'
+  model: "gemini-3.6-flash"   # For OpenAI: 'gpt-4o-mini', for Ollama: 'llama3:latest'
+  temperature: 0.7
+  max_tokens: 500
+  ollama_base_url: "http://localhost:11434/v1"
+
+modules:
+  system:
+    require_confirmation_for_destructive: true
+    safe_mode: false
+  apps_and_files:
+    search_directories:
+      - "Desktop"
+      - "Documents"
+      - "Downloads"
+      - "Pictures"
+      - "Videos"
+    max_search_depth: 3
+    max_results: 5
+  browser:
+    default_engine: "google"  # Options: 'google', 'youtube', 'duckduckgo'
+    preferred_browser: ""     # Leave blank for OS default
+  media:
+    default_platform: "youtube" # 'youtube' or 'spotify'
